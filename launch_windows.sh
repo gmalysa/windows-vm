@@ -31,7 +31,7 @@ MOUNT_CDROM=
 
 # Options
 # <>, y
-ENABLE_VIRTIO_SCSI_HDD=
+ENABLE_VIRTIO_SCSI_HDD=y
 HDD_PATH=/home/greg/qemu/windows7-bios-q35-steam.qcow2
 
 # Options (any from "qemu-system-x86_64 -device help" under Networking)
@@ -103,12 +103,21 @@ if [ -z "$ENABLE_VIRTIO_SCSI_HDD" ]; then
 	#HD_STR="${HD_STR} -drive file=/dev/sdd,if=none,id=g,format=raw,aio=threads,cache=none"
 	#HD_STR="${HD_STR} -device virtio-blk-pci,drive=g"
 #	HD_STR="${HD_STR} -device ide-hd,bus=ide.3,drive=g"
-	HD_STR="${HD_STR} -drive file=/dev/sdc,if=none,id=g2,format=raw,aio=threads,cache=none"
+	HD_STR="${HD_STR} -drive file=/dev/sdc,if=none,id=g2,format=raw,aio=native,cache=none"
 	HD_STR="${HD_STR} -device virtio-blk-pci,drive=g2"
 else
-	HD_STR="-device virtio-scsi-pci"
-	HD_STR="${HD_STR} -drive file=${HDD_PATH},id=disk,format=qcow2,if=none,cache=none,aio=native,media=disk"
+
+	HD_STR="-object iothread,id=iothread0"
+	HD_STR="${HD_STR} -device virtio-scsi-pci,iothread=iothread0,num_queues=8"
+
+	HD_STR="${HD_STR} -drive file=${HDD_PATH},id=disk,format=qcow2,if=none,cache=writeback,aio=threads,discard=unmap,media=disk"
 	HD_STR="${HD_STR} -device scsi-hd,drive=disk"
+
+	HD_STR="${HD_STR} -drive if=none,file=/dev/sdc,if=none,id=g2,format=raw,aio=threads,cache=writeback,discard=unmap"
+	HD_STR="${HD_STR} -device scsi-hd,drive=g2"
+
+	HD_STR="${HD_STR} -drive if=none,file=/dev/sdd,if=none,id=g,format=raw,aio=threads,cache=writeback,discard=unmap"
+	HD_STR="${HD_STR} -device scsi-hd,drive=g"
 fi;
 HD_STR+=" -boot order=dc,menu=on,"
 
