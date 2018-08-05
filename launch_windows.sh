@@ -149,7 +149,7 @@ export QEMU_AUDIO_DRV="pa"
 	#-L /usr/share/ovmf-x64 -bios ovmf-with-csm.fd \
 
 QEMU_COMMAND="qemu-system-x86_64 -enable-kvm \
-	-cpu host,kvm=off,hv_vapic,hv_time,hv_relaxed,hv_runtime,hv_synic,hv_stimer,hv_spinlocks=0x1fff,hv_vendor_id=vmgamingonly,host-cache-info=on \
+	-cpu host,kvm=off,hv_vapic,hv_time,hv_relaxed,hv_spinlocks=0x1fff,hv_vendor_id=vmgamingonly,host-cache-info=on \
 	-smp sockets=1,cores=4,threads=2 \
 	-monitor stdio \
 	-nodefaults \
