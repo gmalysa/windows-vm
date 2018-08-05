@@ -51,10 +51,9 @@ fi;
 if [ -z "$ENABLE_VFIO_PCI" ]; then
 	VFIO_STR=
 else
-	VFIO_STR="-device ioh3420,bus=pcie.0,addr=1c.0,multifunction=on,slot=1,chassis=1,id=root.1"
-	VFIO_STR+=" -device vfio-pci,host=01:00.0,bus=root.1,addr=00.0,x-vga=on,multifunction=on"
+	VFIO_STR=" -device vfio-pci,host=01:00.0,x-vga=on,multifunction=on"
 	#VFIO_STR+=" -device vfio-pci,host=01:00.0,bus=root.1,addr=00.0,x-vga=on,multifunction=on,romfile=/home/greg/qemu/Gigabyte.GTX1070.8192.160624.rom"
-	VFIO_STR+=" -device vfio-pci,host=01:00.1,bus=root.1,addr=00.1"
+	VFIO_STR+=" -device vfio-pci,host=01:00.1"
 
 	# passthrough with a boot rom for the gpu (doesn't seem to work)
 	#-device vfio-pci,host=01:00.0,bus=root.1,addr=00.0,x-vga=on,multifunction=on,romfile=/home/greg/qemu/Gigabyte.GTX1070.8192.160624.rom \
