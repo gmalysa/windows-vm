@@ -40,7 +40,7 @@ NETWORK_MODE=virtio-net
 
 # Options
 # <>, y
-ENABLE_HUGEPAGES=y
+ENABLE_HUGEPAGES=
 
 if [ -z "$DISABLE_HOST_VGA" ]; then
 	VGA_STR="-vga std"
