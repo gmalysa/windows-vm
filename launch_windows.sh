@@ -118,10 +118,10 @@ else
 	HD_STR="${HD_STR} -drive file=${HDD_PATH},id=disk,format=qcow2,if=none,cache=writeback,aio=threads,discard=unmap,media=disk"
 	HD_STR="${HD_STR} -device scsi-hd,drive=disk"
 
-	HD_STR="${HD_STR} -drive if=none,file=/dev/sdc,if=none,id=g2,format=raw,aio=threads,cache=writeback,discard=unmap"
+	HD_STR="${HD_STR} -drive if=none,file=/dev/disk/by-id/wwn-0x50014ee2618bab06,if=none,id=g2,format=raw,aio=threads,cache=writeback,discard=unmap"
 	HD_STR="${HD_STR} -device scsi-hd,drive=g2"
 
-	HD_STR="${HD_STR} -drive if=none,file=/dev/sdd,if=none,id=g,format=raw,aio=threads,cache=writeback,discard=unmap"
+	HD_STR="${HD_STR} -drive if=none,file=/dev/disk/by-id/wwn-0x50014ee20c9a4c02,if=none,id=g,format=raw,aio=threads,cache=writeback,discard=unmap"
 	HD_STR="${HD_STR} -device scsi-hd,drive=g"
 fi;
 HD_STR+=" -boot order=dc,menu=on,"
