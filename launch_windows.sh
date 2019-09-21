@@ -62,7 +62,11 @@ fi;
 if [ -z "$ENABLE_USB_KB" ]; then
 	USB_STR=
 else
-	USB_STR="-usb -device usb-host,vendorid=0x1532,productid=0x010d -device usb-host,vendorid=0x1532,productid=0x0037"
+	# Razor keyboard forward
+#	USB_STR="-usb -device usb-host,vendorid=0x1532,productid=0x010d -device usb-host,vendorid=0x1532,productid=0x0037"
+
+	# Das Keyboard forward
+	USB_STR="-usb -device usb-host,vendorid=0x24f0,productid=0x0140 -device usb-host,vendorid=0x1532,productid=0x0037"
 
 	# Logitech M500
 	#USB_STR="${USB_STR} -device usb-host,vendorid=0x046d,productid=0xc069"
