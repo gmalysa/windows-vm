@@ -126,11 +126,8 @@ else
 	HD_STR="${HD_STR} -drive file=${HDD_PATH},id=disk,format=qcow2,if=none,cache=writeback,aio=threads,discard=unmap,media=disk"
 	HD_STR="${HD_STR} -device scsi-hd,drive=disk"
 
-#	HD_STR="${HD_STR} -drive if=none,file=/dev/disk/by-id/wwn-0x50014ee2618bab06,if=none,id=g2,format=raw,aio=threads,cache=writeback,discard=unmap"
-#	HD_STR="${HD_STR} -device scsi-hd,drive=g2"
-#
-#	HD_STR="${HD_STR} -drive if=none,file=/dev/disk/by-id/wwn-0x50014ee20c9a4c02,if=none,id=g,format=raw,aio=threads,cache=writeback,discard=unmap"
-#	HD_STR="${HD_STR} -device scsi-hd,drive=g"
+	HD_STR="${HD_STR} -drive file=/dev/disk/by-id/ata-Samsung_SSD_850_EVO_1TB_S2RENX0J107756M,if=none,id=g,format=raw,aio=threads,cache=writeback,discard=unmap"
+	HD_STR="${HD_STR} -device scsi-hd,drive=g"
 fi;
 HD_STR+=" -boot order=dc,menu=on,"
 
@@ -149,7 +146,6 @@ NETWORK_STR="-netdev tap,ifname=tap0,script=no,downscript=no,id=ethport"
 NETWORK_STR="${NETWORK_STR} -device ${NETWORK_MODE},netdev=ethport"
 
 # pulseaudio isn't working at the moment (possibly host side, haven't even tried it yet there
-#export QEMU_AUDIO_DRV="pa"
 
 # QEMU_PA_SINK and QEMU_PA_SOURCE might need configuration
 # Likely the source is the right thing to connect
@@ -164,6 +160,7 @@ QEMU_COMMAND="qemu-system-x86_64 -enable-kvm \
 	-rtc base=localtime \
 	-L /usr/share/edk2-ovmf/ \
 	-bios /usr/share/edk2-ovmf/OVMF_CODE.fd
+	-audiodev pa,id=pa1,server=/tmp/pulse-PKdhtXMmr18n/native
 	\
 	${VGA_STR} ${VFIO_STR} ${USB_STR} ${SOUND_STR} ${FLOPPY_STR} ${CDROM_STR} ${HD_STR} ${NETWORK_STR} ${MEM_STR} $@"
 
