@@ -145,7 +145,7 @@ fi;
 NETWORK_STR="-netdev tap,ifname=tap0,script=no,downscript=no,id=ethport"
 NETWORK_STR="${NETWORK_STR} -device ${NETWORK_MODE},netdev=ethport"
 
-# pulseaudio isn't working at the moment (possibly host side, haven't even tried it yet there
+PULSE_SERVER=$(ls -d /tmp/pulse-* | awk -e '{ print $1 }')
 
 # QEMU_PA_SINK and QEMU_PA_SOURCE might need configuration
 # Likely the source is the right thing to connect
@@ -160,7 +160,7 @@ QEMU_COMMAND="qemu-system-x86_64 -enable-kvm \
 	-rtc base=localtime \
 	-L /usr/share/edk2-ovmf/ \
 	-bios /usr/share/edk2-ovmf/OVMF_CODE.fd
-	-audiodev pa,id=pa1,server=/tmp/pulse-PKdhtXMmr18n/native
+	-audiodev pa,id=pa1,server=${PULSE_SERVER}/native
 	\
 	${VGA_STR} ${VFIO_STR} ${USB_STR} ${SOUND_STR} ${FLOPPY_STR} ${CDROM_STR} ${HD_STR} ${NETWORK_STR} ${MEM_STR} $@"
 
